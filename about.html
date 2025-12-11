@@ -1,0 +1,223 @@
+<!-- Author; Biraj Man Tamang -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - McNeese Parking Services</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Styles for the About Page */
+        
+        /* Hero section at the top with blue gradient background */
+        .about-hero {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        /* Main heading in the hero section */
+        .about-hero h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        /* Subtitle text in the hero section */
+        .about-hero p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.95;
+        }
+
+        /* Main content container - keeps everything centered and not too wide */
+        .about-content {
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        /* Grid layout for the three information cards */
+        .info-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Cards automatically adjust to screen size */
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        /* Individual card styling - the boxes with icons */
+        .info-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+            text-align: center;
+        }
+
+        /* The emoji icon at the top of each card */
+        .info-card .icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        /* Card title styling */
+        .info-card h3 {
+            font-size: 22px;
+            color: var(--dark-gray);
+            margin-bottom: 10px;
+        }
+
+        /* Card description text */
+        .info-card p {
+            color: var(--medium-gray);
+            line-height: 1.6;
+        }
+
+        /* Call-to-action box at the bottom (blue box with "Need Help?") */
+        .cta-box {
+            background: var(--primary-blue);
+            color: white;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        /* Heading in the call-to-action box */
+        .cta-box h2 {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        /* Text in the call-to-action box */
+        .cta-box p {
+            font-size: 16px;
+            margin-bottom: 25px;
+            opacity: 0.95;
+        }
+
+        /* White button inside the blue CTA box */
+        .btn-white {
+            background: white;
+            color: var(--primary-blue);
+            padding: 12px 30px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: transform 0.3s; /* Smooth animation on hover */
+        }
+
+        /* Button grows slightly when you hover over it */
+        .btn-white:hover {
+            transform: scale(1.05);
+        }
+
+        /* Mobile phone styles - makes everything stack vertically on small screens */
+        @media (max-width: 768px) {
+            .about-hero h1 {
+                font-size: 32px; /* Smaller heading on phones */
+            }
+            
+            .info-cards {
+                grid-template-columns: 1fr; /* Stack cards vertically on phones */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top navigation bar -->
+    <header class="header">
+        <div class="container">
+            <!-- McNeese logo and text on the left -->
+            <div class="logo">
+                <div class="logo-icon"><img src="download.png" alt="McNeese Logo" width="100" height="50"></div>
+                <div class="logo-text">
+                    <h1>McNeese State University</h1>
+                    <p>Parking Services</p>
+                </div>
+            </div>
+            <!-- Navigation links on the right -->
+            <nav class="nav">
+                <a href="index.php" class="nav-link">Home</a>
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="about.html" class="nav-link active">About</a> <!-- 'active' highlights the current page -->
+            </nav>
+        </div>
+    </header>
+
+    <!-- Big blue section at the top with the main heading -->
+    <section class="about-hero">
+        <h1>About McNeese Parking Services</h1>
+        <p>Making parking simple, accessible, and convenient for the entire McNeese community since 1939.</p>
+    </section>
+
+    <!-- Main content area with cards and info -->
+    <div class="about-content">
+        <!-- Three information cards showing mission, services, and commitment -->
+        <div class="info-cards">
+            <!-- Card 1: Our Mission -->
+            <div class="info-card">
+                <div class="icon">🎯</div>
+                <h3>Our Mission</h3>
+                <p>Provide safe, efficient parking solutions that support the academic mission of McNeese State University.</p>
+            </div>
+
+            <!-- Card 2: What We Do -->
+            <div class="info-card">
+                <div class="icon">🚗</div>
+                <h3>What We Do</h3>
+                <p>Manage 3,200+ parking spaces across 15 lots with digital permits, 24/7 security, and excellent customer service.</p>
+            </div>
+
+            <!-- Card 3: Our Commitment -->
+            <div class="info-card">
+                <div class="icon">💚</div>
+                <h3>Our Commitment</h3>
+                <p>Dedicated to sustainability with EV charging stations and eco-friendly practices for a greener campus.</p>
+            </div>
+        </div>
+
+        <!-- Blue box asking if users need help -->
+        <div class="cta-box">
+            <h2>Need Help?</h2>
+            <p>Our friendly team is here to assist you with all your parking needs.</p>
+            <!-- You can add a button here if needed -->
+        </div>
+    </div>
+
+    <!-- Footer at the bottom with contact info, hours, and links -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <!-- Contact information section -->
+            <div class="footer-section">
+                <h3>Contact Information</h3>
+                <p>📞 (337) 475-5000</p>
+                <p>✉️ parking@mcneese.edu</p>
+                <p>📍 4205 Ryan St.<br>Lake Charles, LA 70609</p>
+            </div>
+            <!-- Office hours section -->
+            <div class="footer-section">
+                <h3>Office Hours</h3>
+                <p>Monday – Friday: 8:00 AM – 5:00 PM</p>
+                <p>Saturday: 9:00 AM – 1:00 PM</p>
+                <p>Sunday: Closed</p>
+            </div>
+            <!-- Quick links section -->
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <p><a href="index.php" class="footer-link">Home</a></p>
+                <p><a href="about.html" class="footer-link">About Us</a></p>
+                <p><a href="login.html" class="footer-link">Login</a></p>
+                <p><a href="#" class="footer-link">FAQ</a></p>
+            </div>
+        </div>
+        <!-- Copyright notice at the very bottom -->
+        <div class="footer-bottom">
+            <p>© 2025 McNeese State University. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,503 @@
+ <!-- Author:Niraj Bhandari -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Tells the browser this is an HTML5 document -->
+    <meta charset="UTF-8">
+
+    <!-- Makes the layout responsive on mobile screens -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Profile - McNeese Parking Services</title>
+
+    <!-- External stylesheet for global styles -->
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        /* Container that holds the entire profile section */
+        .profile-container {
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 20px;
+        }
+
+        /* Header section with user's name and avatar */
+        .profile-header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        /* Circular avatar showing user's initials */
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            background: white;
+            color: var(--primary-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: 700;
+            margin: 0 auto 20px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* User’s main name displayed below avatar */
+        .profile-name {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        /* Lighter text for user's email */
+        .profile-email {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        /* Layout for the cards — 2 columns on desktop */
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* Each card box uses shadow and spacing */
+        .profile-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Title of each card */
+        .profile-card h3 {
+            color: var(--dark-gray);
+            margin-bottom: 20px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Each info row inside the cards */
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        /* Remove border on last row */
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        /* Labels on left side */
+        .info-label {
+            color: var(--medium-gray);
+            font-weight: 500;
+        }
+
+        /* Values on right side */
+        .info-value {
+            color: var(--dark-gray);
+            font-weight: 600;
+        }
+
+        /* Edit button inside cards */
+        .btn-edit {
+            background: var(--primary-blue);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: 100%;
+        }
+
+        /* Hover effect for edit button */
+        .btn-edit:hover {
+            background: var(--dark-blue);
+        }
+
+        /* Red danger button */
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: 100%;
+        }
+
+        /* Hover effect for danger button */
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        /* Makes a card span the entire row */
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        /* Modal background overlay */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Main content box of the modal */
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        /* Header area of modal */
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        /* Title inside the modal */
+        .modal-header h3 {
+            color: var(--dark-gray);
+            font-size: 24px;
+            margin: 0;
+        }
+
+        /* X close button */
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: var(--medium-gray);
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+        }
+
+        /* Close button hover */
+        .close-modal:hover {
+            color: var(--dark-gray);
+        }
+
+        /* Buttons inside modal footer */
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        /* Cancel button */
+        .btn-cancel {
+            background: var(--light-gray);
+            color: var(--dark-gray);
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            flex: 1;
+        }
+
+        /* Hover effect for cancel */
+        .btn-cancel:hover {
+            background: #e2e6ea;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full-width {
+                grid-column: 1;
+            }
+
+            .profile-header {
+                padding: 30px 20px;
+            }
+
+            .profile-name {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Website Header with Logo + Navigation -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <!-- University logo -->
+                <div class="logo-icon"><img src="download.png" alt="McNeese Logo" width="100" height="50"></div>
+                
+                <!-- Text next to logo -->
+                <div class="logo-text">
+                    <h1>McNeese State University</h1>
+                    <p>Parking Services</p>
+                </div>
+            </div>
+
+            <!-- Main navigation bar -->
+            <nav class="nav">
+                <a href="about.html" class="nav-link">About</a>
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="profile.html" class="nav-link active">Profile</a>
+                <!-- Logout button triggers JS function -->
+                <a href="#" class="btn-logout" onclick="handleLogout()">Logout</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Profile Section -->
+    <div class="profile-container">
+        
+        <!-- Top part showing avatar, name, and email -->
+        <div class="profile-header">
+            <div class="profile-avatar" id="profileInitials">JD</div>
+            <div class="profile-name" id="profileName"></div>
+            <div class="profile-email" id="profileEmail">john.doe@mcneese.edu</div>
+        </div>
+
+        <!-- Placeholder for alerts (success/error messages) -->
+        <div id="alertContainer"></div>
+
+        <!-- Grid layout containing cards -->
+        <div class="profile-grid">
+
+            <!-- Card: Personal Info -->
+            <div class="profile-card">
+                <h3>👤 Personal Information</h3>
+
+                <div class="info-row">
+                    <span class="info-label">First Name</span>
+                    <span class="info-value" id="displayFirstName">John</span>
+                </div>
+
+                <div class="info-row">
+                    <span class="info-label">Last Name</span>
+                    <span class="info-value" id="displayLastName">Doe</span>
+                </div>
+
+                <div class="info-row">
+                    <span class="info-label">Phone Number</span>
+                    <span class="info-value" id="displayPhone">(337) 123-4567</span>
+                </div>
+
+                <div class="info-row">
+                    <span class="info-label">ID</span>
+                    <span class="info-value" id="displayStudentId">MSU123456</span>
+                </div>
+
+                <!-- Button that opens the edit modal -->
+                <button class="btn-edit" onclick="showEditModal()" style="margin-top: 20px;">
+                    ✏️ Edit Information
+                </button>
+            </div>
+
+            <!-- Card: Account Info -->
+            <div class="profile-card">
+                <h3>🔐 Account Details</h3>
+
+                <div class="info-row">
+                    <span class="info-label">Email Address</span>
+                    <span class="info-value" id="displayEmail">john.doe@mcneese.edu</span>
+                </div>
+
+                <div class="info-row">
+                    <span class="info-label">User Type</span>
+                    <span class="info-value" id="displayUserType">Student</span>
+                </div>
+
+                <div class="info-row">
+                    <span class="info-label">Member Since</span>
+                    <span class="info-value" id="displayMemberSince">Jan 2025</span>
+                </div>
+
+                <!-- Opens password change modal -->
+                <button class="btn-edit" onclick="showPasswordModal()" style="margin-top: 20px;">
+                    🔑 Change Password
+                </button>
+            </div>
+
+            <!-- Card: Active Permits -->
+            <div class="profile-card full-width">
+                <h3>🎫 Active Permits</h3>
+                <div id="activePermitsList">
+                    <p style="color: var(--medium-gray);">Loading permits...</p>
+                </div>
+            </div>
+
+            <!-- Card: Quick Actions -->
+            <div class="profile-card">
+                <h3>⚡ Quick Actions</h3>
+
+                <!-- Link to purchase permit -->
+                <button class="btn-edit" onclick="window.location.href='purchase.html'" style="margin-bottom: 10px;">
+                    🛒 Purchase New Permit
+                </button>
+
+                <!-- Link to dashboard -->
+                <button class="btn-edit" onclick="window.location.href='dashboard.html'">
+                    📊 View Dashboard
+                </button>
+            </div>
+
+            <!-- Card: Support Info -->
+            <div class="profile-card">
+                <h3>💬 Need Help?</h3>
+                <p style="color: var(--medium-gray); margin-bottom: 15px; line-height: 1.6;">
+                    Contact Parking Services for assistance with your account or permits.
+                </p>
+                <p style="margin: 5px 0; color: var(--dark-gray);">📞 (337) 475-5000</p>
+                <p style="margin: 5px 0; color: var(--dark-gray);">✉️ parking@mcneese.edu</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Edit Personal Info -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            
+            <div class="modal-header">
+                <h3>Edit Personal Information</h3>
+                <!-- Close button -->
+                <button class="close-modal" onclick="closeEditModal()">&times;</button>
+            </div>
+
+            <!-- Edit form -->
+            <form id="editProfileForm" onsubmit="handleUpdateProfile(event)">
+                
+                <div class="form-group">
+                    <label for="editFirstName" class="form-label">First Name</label>
+                    <input type="text" id="editFirstName" class="form-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="editLastName" class="form-label">Last Name</label>
+                    <input type="text" id="editLastName" class="form-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="editPhone" class="form-label">Phone Number</label>
+                    <input type="tel" id="editPhone" class="form-input" placeholder="(337) 123-4567">
+                </div>
+
+                <!-- Modal buttons -->
+                <div class="modal-buttons">
+                    <button type="button" class="btn-cancel" onclick="closeEditModal()">Cancel</button>
+                    <button type="submit" class="btn-edit">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal: Change Password -->
+    <div id="passwordModal" class="modal">
+        <div class="modal-content">
+            
+            <div class="modal-header">
+                <h3>Change Password</h3>
+                <button class="close-modal" onclick="closePasswordModal()">&times;</button>
+            </div>
+
+            <!-- Password change form -->
+            <form id="changePasswordForm" onsubmit="handleChangePassword(event)">
+                
+                <div class="form-group">
+                    <label for="currentPassword" class="form-label">Current Password</label>
+                    <input type="password" id="currentPassword" class="form-input" required minlength="8">
+                </div>
+
+                <div class="form-group">
+                    <label for="newPassword" class="form-label">New Password</label>
+                    <input type="password" id="newPassword" class="form-input" required minlength="8">
+                    <small style="color: var(--medium-gray); font-size: 13px;">Minimum 8 characters</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmNewPassword" class="form-label">Confirm New Password</label>
+                    <input type="password" id="confirmNewPassword" class="form-input" required minlength="8">
+                </div>
+
+                <div class="modal-buttons">
+                    <button type="button" class="btn-cancel" onclick="closePasswordModal()">Cancel</button>
+                    <button type="submit" class="btn-edit">Update Password</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="container footer-content">
+
+            <div class="footer-section">
+                <h3>Contact Information</h3>
+                <p>📞 (337) 475-5000</p>
+                <p>✉️ parking@mcneese.edu</p>
+                <p>📍 4205 Ryan St.<br>Lake Charles, LA 70609</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>Office Hours</h3>
+                <p>Monday – Friday: 8:00 AM – 5:00 PM</p>
+                <p>Saturday: 9:00 AM – 1:00 PM</p>
+                <p>Sunday: Closed</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <p><a href="index.php" class="footer-link">Home</a></p>
+                <p><a href="about.html" class="footer-link">About Us</a></p>
+                <p><a href="dashboard.html" class="footer-link">Dashboard</a></p>
+                <p><a href="#" class="footer-link">FAQ</a></p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2025 McNeese State University. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JS files handling profile logic and session timeout -->
+    <script src="profile.js"></script>
+    <script src="session-timeout.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - McNeese Parking Services</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header with navigation -->
+    <header class="header">
+        <div class="container">
+            <!-- University logo -->
+            <div class="logo">
+                <div class="logo-icon"><img src="download.png" alt="A description of the image" width="100" height="50"></div>
+                <div class="logo-text">
+                    <h1>McNeese State University</h1>
+                    <p>Parking Services</p>
+                </div>
+            </div>
+            <!-- Nav menu - login page is active -->
+            <nav class="nav">
+                <a href="index.php" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="login.html" class="btn-logout">Login</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Login form container -->
+    <div class="form-container" style="margin-top: 60px; margin-bottom: 60px;">
+        <h2 class="form-title">Login to Your Account</h2>
+        <p class="form-subtitle">Access your parking permits and manage your account</p>
+        
+        <!-- Shows error/success messages after login attempt -->
+        <div id="alertContainer"></div>
+        
+        <!-- Main login form -->
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <!-- Email field - must be a valid email format -->
+            <div class="form-group">
+                <label for="email" class="form-label">University Email</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    class="form-input" 
+                    placeholder="abcd@mcneese.edu"
+                    required
+                    aria-label="University Email Address"
+                >
+            </div>
+            
+            <!-- Password field - text is hidden for security -->
+            <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    class="form-input" 
+                    placeholder="Enter your password"
+                    required
+                    aria-label="Password"
+                >
+            </div>
+            
+            <!-- Forgot password link -->
+            <div class="form-group" style="text-align: right;">
+               <a href="forgot_password.html" style="color: var(--primary-blue); text-decoration: none; font-size: 14px;">Forgot Password?</a>
+            </div>
+            
+            <!-- Submit button to login -->
+            <button type="submit" class="btn-primary">Login</button>
+        </form>
+        
+        <!-- Link to registration page for new users -->
+        <div style="text-align: center; margin-top: 20px;">
+            <p>Don't have an account? <a href="register.html" style="color: var(--primary-blue); text-decoration: none; font-weight: 600;">Register Here</a></p>
+        </div>
+        
+        <style>
+            .hero {
+               
+                background-image: url('McNeesePhoto.jpg'); /* your image */
+            
+            }
+        </style>
+        
+    </div>
+
+    <!-- Footer section -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <!-- Contact info -->
+            <div class="footer-section">
+                <h3>Contact Information</h3>
+                <p>📞 (337) 475-5000</p>
+                <p>✉️ parking@mcneese.edu</p>
+                <p>📍 4205 Ryan St.<br>Lake Charles, LA 70609</p>
+            </div>
+            <!-- Office hours -->
+            <div class="footer-section">
+                <h3>Office Hours</h3>
+                <p>Monday – Friday: 8:00 AM – 5:00 PM</p>
+                <p>Saturday: 9:00 AM – 1:00 PM</p>
+                <p>Sunday: Closed</p>
+            </div>
+            <!-- Quick links -->
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <p><a href="#" class="footer-link">Parking Regulations</a></p>
+                <p><a href="#" class="footer-link">Appeal Process</a></p>
+                <p><a href="#" class="footer-link">FAQ</a></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 McNeese State University. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Authentication JavaScript handles login logic -->
+    <script src="auth.js"></script>
+     <script src="session-timeout.js"></script>
+</body>
+</html>

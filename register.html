@@ -1,0 +1,385 @@
+ <!-- Author: Manis Khatri -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - McNeese Parking Services</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .password-requirements {
+            background: #f8f9fa;
+            border-left: 4px solid var(--primary-blue);
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        
+        .password-requirements h4 {
+            margin: 0 0 10px 0;
+            color: var(--dark-gray);
+            font-size: 15px;
+        }
+        
+        .requirement {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 5px 0;
+            color: var(--medium-gray);
+        }
+        
+        .requirement.met {
+            color: var(--success);
+        }
+        
+        .requirement.met .check {
+            color: var(--success);
+            font-weight: bold;
+        }
+        
+        .requirement .check {
+            color: var(--medium-gray);
+            font-weight: bold;
+        }
+        
+        .password-strength {
+            margin-top: 10px;
+            height: 4px;
+            background: #e9ecef;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        
+        .password-strength-bar {
+            height: 100%;
+            width: 0%;
+            transition: all 0.3s;
+            background: #dc3545;
+        }
+        
+        .password-strength-bar.weak {
+            width: 33%;
+            background: #dc3545;
+        }
+        
+        .password-strength-bar.medium {
+            width: 66%;
+            background: #ffc107;
+        }
+        
+        .password-strength-bar.strong {
+            width: 100%;
+            background: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with navigation -->
+    <header class="header">
+        <div class="container">
+            <!-- Logo section -->
+            <div class="logo">
+                <div class="logo-icon"><img src="download.png" alt="McNeese Logo" width="100" height="50"></div>
+                <div class="logo-text">
+                    <h1>McNeese State University</h1>
+                    <p>Parking Services</p>
+                </div>
+            </div>
+            <!-- Nav links -->
+            <nav class="nav">
+                <a href="index.php" class="nav-link">Home</a>
+                <a href="login.html" class="btn-logout">Login</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Registration form container -->
+    <div class="form-container" style="margin-top: 60px; margin-bottom: 60px;">
+        <h2 class="form-title">Create Your Account</h2>
+        <p class="form-subtitle">Register to purchase and manage parking permits</p>
+        
+        <!-- Alert messages appear here -->
+        <div id="alertContainer"></div>
+        
+        <!-- Main registration form -->
+        <form id="registerForm" onsubmit="handleRegister(event)">
+            <!-- First and last name row -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="firstName" class="form-label">First Name *</label>
+                    <input 
+                        type="text" 
+                        id="firstName" 
+                        name="firstName" 
+                        class="form-input" 
+                        placeholder="Enter first name"
+                        required
+                        aria-label="First Name"
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label for="lastName" class="form-label">Last Name *</label>
+                    <input 
+                        type="text" 
+                        id="lastName" 
+                        name="lastName" 
+                        class="form-input" 
+                        placeholder="Enter last name"
+                        required
+                        aria-label="Last Name"
+                    >
+                </div>
+            </div>
+            
+            <!-- Student ID and phone number row -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="studentId" class="form-label"> ID *</label>
+                    <input 
+                        type="text" 
+                        id="studentId" 
+                        name="studentId" 
+                        class="form-input" 
+                        placeholder="Enter student ID"
+                        required
+                        aria-label="Student ID"
+                    >
+                </div>
+                
+                <!-- Phone is optional -->
+                <div class="form-group">
+                    <label for="phone" class="form-label">Phone Number</label>
+                    <input 
+                        type="tel" 
+                        id="phone" 
+                        name="phone" 
+                        class="form-input" 
+                        placeholder="(337) 123-4567"
+                        aria-label="Phone Number"
+                    >
+                </div>
+            </div>
+            
+            <!-- Email must be a McNeese email -->
+            <div class="form-group">
+                <label for="email" class="form-label">University Email *</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    class="form-input" 
+                    placeholder="your.name@mcneese.edu"
+                    required
+                    aria-label="University Email"
+                >
+                <small style="color: var(--medium-gray); font-size: 13px;">Must use @mcneese.edu email address</small>
+            </div>
+            
+            <!-- Password fields - need to match -->
+            <div class="form-row">
+                <!-- Password with minimum length requirement -->
+                <div class="form-group">
+                    <label for="password" class="form-label">Password *</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        class="form-input" 
+                        placeholder="Create password"
+                        required
+                        minlength="8"
+                        aria-label="Password"
+                        oninput="checkPasswordStrength()"
+                    >
+                    
+                    <!-- Password Requirements Box -->
+                    <div class="password-requirements">
+                        <h4>Password Requirements:</h4>
+                        <div class="requirement" id="req-length">
+                            <span class="check">✗</span>
+                            <span>At least 8 characters</span>
+                        </div>
+                        <div class="requirement" id="req-upper">
+                            <span class="check">✗</span>
+                            <span>One uppercase letter (A-Z)</span>
+                        </div>
+                        <div class="requirement" id="req-lower">
+                            <span class="check">✗</span>
+                            <span>One lowercase letter (a-z)</span>
+                        </div>
+                        <div class="requirement" id="req-number">
+                            <span class="check">✗</span>
+                            <span>One number (0-9)</span>
+                        </div>
+                        <div class="requirement" id="req-special">
+                            <span class="check">✗</span>
+                            <span>One special character (!@#$%^&*)</span>
+                        </div>
+                        
+                        <!-- Password Strength Bar -->
+                        <div class="password-strength">
+                            <div class="password-strength-bar" id="strengthBar"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Confirm password to prevent typos -->
+                <div class="form-group">
+                    <label for="confirmPassword" class="form-label">Confirm Password *</label>
+                    <input 
+                        type="password" 
+                        id="confirmPassword" 
+                        name="confirmPassword" 
+                        class="form-input" 
+                        placeholder="Confirm password"
+                        required
+                        minlength="8"
+                        aria-label="Confirm Password"
+                    >
+                </div>
+            </div>
+            
+            <!-- Dropdown to select user type -->
+            <div class="form-group">
+                <label for="userType" class="form-label">User Type *</label>
+                <select id="userType" name="userType" class="form-input" required aria-label="User Type">
+                    <option value="">Select your status</option>
+                    <option value="student">Student</option>
+                    <option value="faculty">Faculty/Staff</option>
+                    <option value="visitor">Visitor</option>
+                </select>
+            </div>
+            
+            <!-- Terms and conditions checkbox - required -->
+            <div class="form-group">
+                <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                    <input type="checkbox" required aria-label="Accept Terms and Conditions">
+                    <span style="font-size: 14px;">I agree to the <a href="#" style="color: var(--primary-blue);">Terms and Conditions</a> and <a href="#" style="color: var(--primary-blue);">Privacy Policy</a></span>
+                </label>
+            </div>
+            
+            <!-- Submit button to create account -->
+            <button type="submit" class="btn-primary">Create Account</button>
+        </form>
+        
+        <!-- Link to login page for existing users -->
+        <div style="text-align: center; margin-top: 20px;">
+            <p>Already have an account? <a href="login.html" style="color: var(--primary-blue); text-decoration: none; font-weight: 600;">Login Here</a></p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-section">
+                <h3>Contact Information</h3>
+                <p>📞 (337) 475-5000</p>
+                <p>✉️ parking@mcneese.edu</p>
+                <p>📍 4205 Ryan St.<br>Lake Charles, LA 70609</p>
+            </div>
+            <div class="footer-section">
+                <h3>Office Hours</h3>
+                <p>Monday – Friday: 8:00 AM – 5:00 PM</p>
+                <p>Saturday: 9:00 AM – 1:00 PM</p>
+                <p>Sunday: Closed</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <p><a href="#" class="footer-link">Parking Regulations</a></p>
+                <p><a href="#" class="footer-link">Appeal Process</a></p>
+                <p><a href="#" class="footer-link">FAQ</a></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 McNeese State University. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Authentication JavaScript -->
+    <script src="auth.js"></script>
+    <script>
+        // Password strength checker with real-time feedback
+        function checkPasswordStrength() {
+            const password = document.getElementById('password').value;
+            
+            // Check each requirement
+            const hasLength = password.length >= 8;
+            const hasUpper = /[A-Z]/.test(password);
+            const hasLower = /[a-z]/.test(password);
+            const hasNumber = /[0-9]/.test(password);
+            const hasSpecial = /[^A-Za-z0-9]/.test(password);
+            
+            // Update requirement checkmarks
+            updateRequirement('req-length', hasLength);
+            updateRequirement('req-upper', hasUpper);
+            updateRequirement('req-lower', hasLower);
+            updateRequirement('req-number', hasNumber);
+            updateRequirement('req-special', hasSpecial);
+            
+            // Calculate strength
+            const metCount = [hasLength, hasUpper, hasLower, hasNumber, hasSpecial].filter(Boolean).length;
+            const strengthBar = document.getElementById('strengthBar');
+            
+            if (metCount <= 2) {
+                strengthBar.className = 'password-strength-bar weak';
+            } else if (metCount <= 4) {
+                strengthBar.className = 'password-strength-bar medium';
+            } else {
+                strengthBar.className = 'password-strength-bar strong';
+            }
+        }
+        
+        function updateRequirement(id, met) {
+            const element = document.getElementById(id);
+            const check = element.querySelector('.check');
+            
+            if (met) {
+                element.classList.add('met');
+                check.textContent = '✓';
+            } else {
+                element.classList.remove('met');
+                check.textContent = '✗';
+            }
+        }
+        
+        // Validate password on form submit
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            const password = document.getElementById('password').value;
+            
+            // Check all requirements
+            if (password.length < 8) {
+                e.preventDefault();
+                showAlert('Password must be at least 8 characters', 'error');
+                return false;
+            }
+            
+            if (!/[A-Z]/.test(password)) {
+                e.preventDefault();
+                showAlert('Password must contain at least one uppercase letter', 'error');
+                return false;
+            }
+            
+            if (!/[a-z]/.test(password)) {
+                e.preventDefault();
+                showAlert('Password must contain at least one lowercase letter', 'error');
+                return false;
+            }
+            
+            if (!/[0-9]/.test(password)) {
+                e.preventDefault();
+                showAlert('Password must contain at least one number', 'error');
+                return false;
+            }
+            
+            if (!/[^A-Za-z0-9]/.test(password)) {
+                e.preventDefault();
+                showAlert('Password must contain at least one special character', 'error');
+                return false;
+            }
+        });
+    </script>
+</body>
+</html>

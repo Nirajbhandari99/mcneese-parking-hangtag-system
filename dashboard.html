@@ -1,0 +1,375 @@
+<!-- 
+    Author:Niraj Bhandari
+    -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Character encoding for proper text display -->
+    <meta charset="UTF-8">
+    
+    <!-- Makes the website work well on mobile devices -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Page title that appears in browser tab -->
+    <title>Dashboard - McNeese Parking Services</title>
+    
+    <!-- Link to the CSS file for styling -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- 
+    TOP HEADER SECTION
+    This contains the logo and navigation menu
+    -->
+    <header class="header">
+        <div class="container">
+            <!-- 
+            LOGO AREA
+            Shows the university logo and name
+            -->
+            <div class="logo">
+                <!-- University logo image -->
+                <div class="logo-icon">
+                    <img src="download.png" alt="A description of the image" width="100" height="50">
+                </div>
+                
+                <!-- Text next to the logo -->
+                <div class="logo-text">
+                    <h1>McNeese State University</h1>
+                    <p>Parking Services</p>
+                </div>
+            </div>
+            
+            <!-- 
+            NAVIGATION MENU
+            Links to different pages on the site
+            The "active" class highlights which page we're currently on
+            -->
+            <nav class="nav">
+                <a href="index.php" class="nav-link"></a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="profile.html" class="nav-link">Profile</a>
+                <a href="dashboard.html" class="nav-link active">Dashboard</a>
+                
+                <!-- Logout button (calls JavaScript function when clicked) -->
+                <a href="#" class="btn-logout" onclick="handleLogout()">Logout</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 
+    MAIN DASHBOARD CONTENT AREA
+    Everything the user sees and interacts with
+    -->
+    <div class="dashboard">
+        <!-- 
+        WELCOME MESSAGE
+        Greets the user by name (name is filled in by JavaScript)
+        -->
+        <h2 style="font-size: 32px; margin-bottom: 10px; color: var(--dark-gray);">
+            Welcome, <span id="userName">Student</span>!
+        </h2>
+        <p style="color: var(--medium-gray); margin-bottom: 40px;">
+            Manage your parking permits and vehicle information
+        </p>
+        
+        <!-- 
+        ALERT CONTAINER
+        This is where success/error messages appear (initially empty)
+        JavaScript will add messages here when needed
+        -->
+        <div id="alertContainer"></div>
+        
+        <!-- 
+        THREE CARD GRID LAYOUT
+        Shows permits, vehicles, and payment history side by side
+        -->
+        <div class="dashboard-grid">
+            
+            <!-- 
+            CARD #1: PARKING PERMITS
+            Shows all the parking permits the user has purchased
+            -->
+            <div class="dashboard-card">
+                <h3>🎫 Buy New Permits</h3>
+                <p style="color: var(--medium-gray); margin: 10px 0;">
+                    Purchase your permit here to become eligible to park on campus.
+                </p>
+                
+                <!-- The list of permits will be loaded here by JavaScript -->
+                <div id="activePermits">
+                    <p style="color: var(--medium-gray);">Loading permits...</p>
+                </div>
+                
+                <!-- Button to go to the purchase page and buy a new permit -->
+                <button class="btn-secondary" onclick="window.location.href='purchase.html'" style="margin-top: 15px;">
+                    Purchase New Permit
+                </button>
+            </div>
+            
+            <!-- 
+            CARD #2: VEHICLES
+            Shows all the vehicles the user has registered
+            -->
+            <div class="dashboard-card">
+                <h3>🚗 Registered Vehicles</h3>
+                
+                <!-- The list of vehicles will be loaded here by JavaScript -->
+                <div id="registeredVehicles">
+                    <p style="color: var(--medium-gray);">Loading vehicles...</p>
+                </div>
+                
+                <!-- Button to open a popup form to add a new vehicle -->
+                <button class="btn-secondary" onclick="showAddVehicleModal()" style="margin-top: 15px;">
+                    Add Vehicle
+                </button>
+            </div>
+            
+            <!-- 
+            CARD #3: PAYMENT HISTORY
+            Shows a record of all parking permit purchases
+            -->
+            <div class="dashboard-card">
+                <h3>💳 Payment History</h3>
+                
+                <!-- The payment history will be loaded here by JavaScript -->
+                <div id="paymentHistory">
+                    <p style="color: var(--medium-gray);">Loading payment history...</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 
+        ACCOUNT SETTINGS SECTION
+        Form where users can update their personal info
+        -->
+        <div class="dashboard-card" style="margin-top: 20px;">
+            <h3>⚙️ Account Settings</h3>
+            
+            <!-- Form that updates user information when submitted -->
+            <form id="accountSettingsForm" onsubmit="updateAccountSettings(event)">
+                
+                <!-- 
+                FIRST ROW: Name fields
+                Two input boxes side by side for first and last name
+                -->
+                <div class="form-row">
+                    <!-- First name input -->
+                    <div class="form-group">
+                        <label for="firstName" class="form-label">First Name</label>
+                        <input 
+                            type="text" 
+                            id="firstName" 
+                            name="firstName" 
+                            class="form-input"
+                            aria-label="First Name"
+                        >
+                    </div>
+                    
+                    <!-- Last name input -->
+                    <div class="form-group">
+                        <label for="lastName" class="form-label">Last Name</label>
+                        <input 
+                            type="text" 
+                            id="lastName" 
+                            name="lastName" 
+                            class="form-input"
+                            aria-label="Last Name"
+                        >
+                    </div>
+                </div>
+                
+                <!-- 
+                SECOND ROW: Contact information
+                Phone number and email address fields
+                -->
+                <div class="form-row">
+                    <!-- Phone number input with example format -->
+                    <div class="form-group">
+                        <label for="phone" class="form-label">Phone Number</label>
+                        <input 
+                            type="tel" 
+                            id="phone" 
+                            name="phone" 
+                            class="form-input"
+                            placeholder="(337) 123-4567"
+                            aria-label="Phone Number"
+                        >
+                    </div>
+                    
+                    <!-- Email address input -->
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            class="form-input"
+                            aria-label="Email Address"
+                        >
+                    </div>
+                </div>
+                
+                <!-- Submit button to save the updated information -->
+                <button type="submit" class="btn-secondary">Update Information</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 
+    VEHICLE MODAL POPUP
+    This is a popup form that appears when "Add Vehicle" is clicked
+    It starts hidden and JavaScript shows it when needed
+    -->
+    <div id="vehicleModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; justify-content: center; align-items: center;">
+        
+        <!-- White box that contains the form (centered on screen) -->
+        <div style="background: white; border-radius: 12px; padding: 40px; max-width: 500px; width: 90%; max-height: 90vh; overflow-y: auto;">
+            <h3 style="margin-bottom: 20px; color: var(--dark-gray);">Add New Vehicle</h3>
+            
+            <!-- Form to collect vehicle information -->
+            <form id="addVehicleForm" onsubmit="handleAddVehicle(event)">
+                
+                <!-- Vehicle make (manufacturer like Honda, Ford, Toyota) -->
+                <div class="form-group">
+                    <label for="vehicleMake" class="form-label">Vehicle Make</label>
+                    <input 
+                        type="text" 
+                        id="vehicleMake" 
+                        name="vehicleMake" 
+                        class="form-input" 
+                        placeholder="e.g., Honda"
+                        required
+                        aria-label="Vehicle Make"
+                    >
+                </div>
+                
+                <!-- Vehicle model (specific model like Civic, F-150, Camry) -->
+                <div class="form-group">
+                    <label for="vehicleModel" class="form-label">Vehicle Model</label>
+                    <input 
+                        type="text" 
+                        id="vehicleModel" 
+                        name="vehicleModel" 
+                        class="form-input" 
+                        placeholder="e.g., Civic"
+                        required
+                        aria-label="Vehicle Model"
+                    >
+                </div>
+                
+                <!-- 
+                Vehicle year
+                Must be a number between 1900 and 2025
+                "min" and "max" prevent invalid years
+                -->
+                <div class="form-group">
+                    <label for="vehicleYear" class="form-label">Year</label>
+                    <input 
+                        type="number" 
+                        id="vehicleYear" 
+                        name="vehicleYear" 
+                        class="form-input" 
+                        placeholder="2020"
+                        min="1900"
+                        max="2025"
+                        required
+                        aria-label="Vehicle Year"
+                    >
+                </div>
+                
+                <!-- Vehicle color (like Blue, Red, Silver, etc) -->
+                <div class="form-group">
+                    <label for="vehicleColor" class="form-label">Color</label>
+                    <input 
+                        type="text" 
+                        id="vehicleColor" 
+                        name="vehicleColor" 
+                        class="form-input" 
+                        placeholder="e.g., Blue"
+                        required
+                        aria-label="Vehicle Color"
+                    >
+                </div>
+                
+                <!-- 
+                License plate number
+                This is the most important field for identifying the vehicle
+                -->
+                <div class="form-group">
+                    <label for="vehicleLicense" class="form-label">License Plate</label>
+                    <input 
+                        type="text" 
+                        id="vehicleLicense" 
+                        name="vehicleLicense" 
+                        class="form-input" 
+                        placeholder="ABC-1234"
+                        required
+                        aria-label="License Plate Number"
+                    >
+                </div>
+                
+                <!-- 
+                Two buttons at the bottom
+                One to save the vehicle, one to cancel and close the popup
+                -->
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button type="submit" class="btn-primary">Add Vehicle</button>
+                    <button type="button" class="btn-secondary" onclick="closeVehicleModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 
+    FOOTER SECTION
+    Contact information, office hours, and helpful links
+    Appears at the bottom of every page
+    -->
+    <footer class="footer">
+        <div class="container footer-content">
+            
+            <!-- COLUMN 1: Contact information -->
+            <div class="footer-section">
+                <h3>Contact Information</h3>
+                <p>📞 (337) 475-5000</p>
+                <p>✉️ parking@mcneese.edu</p>
+                <p>📍 4205 Ryan St.<br>Lake Charles, LA 70609</p>
+            </div>
+            
+            <!-- COLUMN 2: Office hours -->
+            <div class="footer-section">
+                <h3>Office Hours</h3>
+                <p>Monday – Friday: 8:00 AM – 5:00 PM</p>
+                <p>Saturday: 9:00 AM – 1:00 PM</p>
+                <p>Sunday: Closed</p>
+            </div>
+            
+            <!-- COLUMN 3: Quick links to other resources -->
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <p><a href="#" class="footer-link">Parking Regulations</a></p>
+                <p><a href="#" class="footer-link">Appeal Process</a></p>
+                <p><a href="#" class="footer-link">FAQ</a></p>
+            </div>
+        </div>
+        
+        <!-- Copyright notice at very bottom -->
+        <div class="footer-bottom">
+            <p>© 2025 McNeese State University. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- 
+
+    JAVASCRIPT FILES
+    These make the page interactive and functional
+    -->
+    
+    <!-- Main dashboard functionality (loads permits, vehicles, handles forms) -->
+    <script src="dashboard.js"></script>
+    
+    <!-- Logs user out automatically after being inactive too long -->
+    <script src="session-timeout.js"></script>
+</body>
+</html>

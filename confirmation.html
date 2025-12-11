@@ -1,0 +1,521 @@
+<!-- author: Manis Khatri -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Confirmed - McNeese Parking Services</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Styles for the confirmation page that shows after someone buys a permit */
+        
+        /* Main container - keeps everything centered and not too wide */
+        .confirmation-container {
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 20px;
+        }
+        
+        /* Big green checkmark circle at the top */
+        .success-icon {
+            width: 100px;
+            height: 100px;
+            background: #28a745; /* Green color */
+            border-radius: 50%; /* Makes it a perfect circle */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            margin: 0 auto 30px;
+            animation: scaleIn 0.5s ease-out; /* Pop-in animation */
+        }
+        
+        /* Animation that makes the checkmark "pop in" when the page loads */
+        @keyframes scaleIn {
+            from {
+                transform: scale(0); /* Start at 0 size */
+            }
+            to {
+                transform: scale(1); /* Grow to full size */
+            }
+        }
+        
+        /* White cards that hold the confirmation information */
+        .confirmation-card {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+            margin-bottom: 20px;
+        }
+        
+        /* Gray box that contains all the permit details */
+        .permit-details {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        /* Each row of information (like "Full Name: John Doe") */
+        .detail-row {
+            display: flex;
+            justify-content: space-between; /* Label on left, value on right */
+            padding: 12px 0;
+            border-bottom: 1px solid #dee2e6; /* Line between rows */
+        }
+        
+        /* Remove the line under the last row */
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+        
+        /* Left side of each row - the label (e.g., "Full Name") */
+        .detail-label {
+            font-weight: 600;
+            color: var(--medium-gray);
+        }
+        
+        /* Right side of each row - the actual value (e.g., "John Doe") */
+        .detail-value {
+            color: var(--dark-gray);
+            font-weight: 500;
+        }
+        
+        /* Blue box with instructions on how to get the physical hang tag */
+        .instruction-box {
+            background: #e7f3ff; /* Light blue background */
+            border-left: 4px solid var(--primary-blue); /* Thick blue line on left */
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        /* Heading inside the instruction box */
+        .instruction-box h4 {
+            color: var(--dark-blue);
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        /* Numbered list inside the instruction box */
+        .instruction-box ol {
+            margin-left: 20px;
+            line-height: 1.8; /* More space between lines for readability */
+        }
+        
+        /* Each step in the numbered list */
+        .instruction-box li {
+            margin-bottom: 10px;
+        }
+        
+        /* Yellow warning box for important reminders */
+        .warning-box {
+            background: #fff3cd; /* Light yellow background */
+            border-left: 4px solid var(--warning); /* Thick yellow/orange line on left */
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        /* Grid layout for the action buttons at the bottom */
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Buttons wrap on small screens */
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        /* Blue download/print buttons */
+        .btn-download {
+            background: var(--primary-blue);
+            color: white;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            transition: background 0.3s; /* Smooth color change on hover */
+        }
+        
+        /* Darker blue when you hover over the button */
+        .btn-download:hover {
+            background: var(--dark-blue);
+        }
+        
+        /* White buttons with blue outline (secondary style) */
+        .btn-secondary-link {
+            background: white;
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s; /* Smooth transition on hover */
+        }
+        
+        /* Button flips colors on hover - blue background, white text */
+        .btn-secondary-link:hover {
+            background: var(--primary-blue);
+            color: white;
+        }
+        
+        /* Dark gray box that displays the permit ID prominently */
+        .permit-id-box {
+            background: var(--dark-gray);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        /* Label above the permit ID number */
+        .permit-id-box h3 {
+            margin-bottom: 10px;
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        /* The actual permit ID number - big and bold */
+        .permit-id-box .permit-number {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 2px; /* Extra space between letters for readability */
+            font-family: monospace; /* Computer-style font for the ID */
+        }
+    </style>
+</head>
+<body>
+    <!-- Top navigation bar -->
+    <header class="header">
+        <div class="container">
+            <!-- McNeese logo and text on the left -->
+            <div class="logo">
+                <div class="logo-icon"><img src="download.png" alt="A description of the image" width="100" height="50"></div>
+                <div class="logo-text">
+                    <h1>McNeese State University</h1>
+                    <p>Parking Services</p>
+                </div>
+            </div>
+            <!-- Navigation links on the right -->
+            <nav class="nav">
+                <a href="about.html" class="nav-link">About</a>
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="profile.html" class="nav-link active">Profile</a>
+                <a href="login.html" class="btn-logout">Logout</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main confirmation content -->
+    <div class="confirmation-container">
+        <!-- Big green checkmark circle - animated to pop in -->
+        <div class="success-icon">✓</div>
+        
+        <!-- Main card with all the confirmation details -->
+        <div class="confirmation-card">
+            <!-- Success message at the top -->
+            <h2 style="text-align: center; color: var(--success); margin-bottom: 10px; font-size: 32px;">
+                Payment Successful!
+            </h2>
+            <p style="text-align: center; color: var(--medium-gray); font-size: 18px; margin-bottom: 30px;">
+                Your parking permit has been activated
+            </p>
+            
+            <!-- Dark box prominently displaying the permit ID -->
+            <div class="permit-id-box">
+                <h3>Your Permit ID</h3>
+                <!-- This ID gets filled in by JavaScript from the purchase -->
+                <div class="permit-number" id="permitIdDisplay">PMT-123456</div>
+            </div>
+            
+            <!-- Receipt showing all the details of what they bought -->
+            <div class="permit-details">
+                <h3 style="margin-bottom: 20px; color: var(--dark-gray);">📄 Permit Details</h3>
+                
+                <!-- Full name of the permit holder -->
+                <div class="detail-row">
+                    <span class="detail-label">Full Name</span>
+                    <span class="detail-value" id="confirmName">John Doe</span>
+                </div>
+                
+                <!-- Student or employee ID number -->
+                <div class="detail-row">
+                    <span class="detail-label"> ID</span>
+                    <span class="detail-value" id="confirmStudentId">MSU123456</span>
+                </div>
+                
+                <!-- Vehicle make/model -->
+                <div class="detail-row">
+                    <span class="detail-label">Vehicle</span>
+                    <span class="detail-value" id="confirmVehicle">Honda Civic</span>
+                </div>
+                
+                <!-- License plate number -->
+                <div class="detail-row">
+                    <span class="detail-label">License Plate</span>
+                    <span class="detail-value" id="confirmLicense">ABC1234</span>
+                </div>
+                
+                <!-- Type of permit (semester or annual) -->
+                <div class="detail-row">
+                    <span class="detail-label">Permit Type</span>
+                    <span class="detail-value" id="confirmPermitType">Semester Pass</span>
+                </div>
+                
+                <!-- How much they paid - shown in green -->
+                <div class="detail-row">
+                    <span class="detail-label">Amount Paid</span>
+                    <span class="detail-value" id="confirmAmount" style="color: var(--success); font-size: 20px;">$85.00</span>
+                </div>
+                
+                <!-- When they bought the permit -->
+                <div class="detail-row">
+                    <span class="detail-label">Purchase Date</span>
+                    <span class="detail-value" id="confirmDate">Nov 20, 2025</span>
+                </div>
+                
+                <!-- When the permit expires -->
+                <div class="detail-row">
+                    <span class="detail-label">Expiration Date</span>
+                    <span class="detail-value" id="confirmExpiry">Mar 20, 2026</span>
+                </div>
+                
+                <!-- Unique transaction ID for the payment -->
+                <div class="detail-row">
+                    <span class="detail-label">Transaction ID</span>
+                    <span class="detail-value" id="confirmTransaction">TXN-123456789</span>
+                </div>
+            </div>
+            
+            <!-- Blue box with step-by-step instructions for getting the physical hang tag -->
+            <div class="instruction-box">
+                <h4>🎫 How to Get Your Parking Hang Tag</h4>
+                <ol>
+                    <!-- Step 1: Go to the office -->
+                    <li><strong>Visit Parking Services Office</strong>
+                        <br>Location: 4205 Ryan St, Lake Charles, LA 70609
+                        <br>Office Hours: Monday-Friday, 8:00 AM - 5:00 PM
+                    </li>
+                    <!-- Step 2: Bring these documents -->
+                    <li><strong>Bring Required Documents:</strong>
+                        <ul style="margin-top: 8px;">
+                            <li>Valid student/faculty ID</li>
+                            <li>Vehicle registration or insurance card</li>
+                            <li>Driver's license</li>
+                            <li>Your Permit ID: <strong><span id="permitIdInstructions">PMT-123456</span></strong></li>
+                        </ul>
+                    </li>
+                    <!-- Step 3: Get your hang tag -->
+                    <li><strong>Receive Your Physical Hang Tag</strong>
+                        <br>Staff will verify your information and issue your hang tag
+                    </li>
+                    <!-- Step 4: Use it properly -->
+                    <li><strong>Display Your Hang Tag</strong>
+                        <br>Hang from your rearview mirror when parked on campus
+                    </li>
+                </ol>
+            </div>
+            
+            <!-- Yellow box with important warnings and reminders -->
+            <div class="warning-box">
+                <h4 style="color: #856404; margin-bottom: 15px;">⚠️ Important Reminders</h4>
+                <ul style="margin-left: 20px; line-height: 1.8;">
+                    <li>Your permit is <strong>valid immediately</strong> for temporary parking</li>
+                    <li>Pick up your physical hang tag <strong>within 5 business days</strong></li>
+                    <li>Keep your Permit ID for reference: <strong><span id="permitIdReminder">PMT-123456</span></strong></li>
+                    <li>Display your hang tag <strong>at all times</strong> when parked on campus</li>
+                    <li>Permits are <strong>non-transferable</strong> and vehicle-specific</li>
+                    <li>Report lost or stolen hang tags immediately to Parking Services</li>
+                </ul>
+            </div>
+            
+            <!-- Green notice box confirming email was sent -->
+            <div style="background: #d4edda; border: 1px solid #c3e6cb; border-radius: 8px; padding: 15px; margin: 20px 0;">
+                <p style="margin: 0; color: #155724;">
+                    <strong>✉️ Confirmation Email Sent</strong><br>
+                    A receipt and permit details have been sent to your university email address.
+                </p>
+            </div>
+            
+            <!-- Action buttons - download receipt, print, view dashboard, etc. -->
+            <div class="action-buttons">
+                <!-- Button to download a PDF receipt -->
+                <button onclick="downloadReceipt()" class="btn-download">
+                    📥 Download Receipt
+                </button>
+                <!-- Button to print the receipt -->
+                <button onclick="printPermit()" class="btn-download">
+                    🖨️ Print Receipt
+                </button>
+                <!-- Link back to the dashboard -->
+                <a href="dashboard.html" class="btn-secondary-link">
+                    📊 View Dashboard
+                </a>
+            </div>
+        </div>
+        
+        <!-- Second card with contact information if they need help -->
+        <div class="confirmation-card">
+            <h3 style="margin-bottom: 20px; color: var(--dark-gray);">📞 Need Help?</h3>
+            <p style="color: var(--medium-gray); line-height: 1.8; margin-bottom: 15px;">
+                If you have questions about your permit or need assistance, contact Parking Services:
+            </p>
+            <!-- Contact details -->
+            <div style="display: grid; gap: 10px;">
+                <p style="margin: 0;">
+                    <strong>Phone:</strong> (337) 475-5000
+                </p>
+                <p style="margin: 0;">
+                    <strong>Email:</strong> parking@mcneese.edu
+                </p>
+                <p style="margin: 0;">
+                    <strong>Office:</strong> 4205 Ryan St, Lake Charles, LA 70609
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer at the bottom of the page -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <!-- Contact information section -->
+            <div class="footer-section">
+                <h3>Contact Information</h3>
+                <p>📞 (337) 475-5000</p>
+                <p>✉️ parking@mcneese.edu</p>
+                <p>📍 4205 Ryan St.<br>Lake Charles, LA 70609</p>
+            </div>
+            <!-- Office hours section -->
+            <div class="footer-section">
+                <h3>Office Hours</h3>
+                <p>Monday – Friday: 8:00 AM – 5:00 PM</p>
+                <p>Saturday: 9:00 AM – 1:00 PM</p>
+                <p>Sunday: Closed</p>
+            </div>
+            <!-- Quick links section -->
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <p><a href="#" class="footer-link">Parking Regulations</a></p>
+                <p><a href="#" class="footer-link">Appeal Process</a></p>
+                <p><a href="#" class="footer-link">FAQ</a></p>
+            </div>
+        </div>
+        <!-- Copyright notice -->
+        <div class="footer-bottom">
+            <p>© 2025 McNeese State University. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- MODAL POPUP: Session timeout warning -->
+    <!-- This pops up when the user has been inactive for a while -->
+    <div id="sessionWarningModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content" style="max-width: 400px;">
+            <!-- Orange header warning about session timeout -->
+            <div class="modal-header" style="background-color: #ff9800; color: white; padding: 20px;">
+                <h2 style="margin: 0; font-size: 20px;">⏱️ Session Timeout Warning</h2>
+            </div>
+            
+            <!-- Body with countdown timer -->
+            <div class="modal-body" style="padding: 30px; text-align: center;">
+                <p style="font-size: 16px; color: #333; margin-bottom: 10px;">
+                    Your session is about to expire due to inactivity.
+                </p>
+                
+                <p style="font-size: 14px; color: #666; margin-bottom: 30px;">
+                    You will be logged out in:
+                </p>
+                
+                <!-- Big countdown number that ticks down -->
+                <div style="font-size: 48px; font-weight: bold; color: #ff9800; margin: 20px 0;">
+                    <span id="sessionCountdown">120</span>
+                </div>
+                
+                <p style="font-size: 12px; color: #999; margin-bottom: 30px;">
+                    seconds
+                </p>
+            </div>
+            
+            <!-- Buttons to either stay logged in or logout -->
+            <div class="modal-footer" style="padding: 20px; display: flex; gap: 10px; border-top: 1px solid #eee;">
+                <!-- Button to extend the session -->
+                <button 
+                    type="button" 
+                    class="btn-primary" 
+                    onclick="extendSession()"
+                    style="flex: 1;"
+                >
+                    Stay Logged In
+                </button>
+                <!-- Button to logout immediately -->
+                <button 
+                    type="button" 
+                    class="btn-secondary" 
+                    onclick="forceLogout()"
+                    style="flex: 1; background-color: #999; border-color: #999;"
+                >
+                    Logout
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Styles for the session timeout modal popup -->
+    <style>
+        /* Dark overlay that covers the whole screen behind the modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999; /* Make sure it appears on top of everything */
+        }
+        
+        /* The white box that contains the modal content */
+        .modal-content {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        /* Top section of the modal */
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        /* Middle section with the countdown timer */
+        .modal-body {
+            padding: 30px 20px;
+        }
+        
+        /* Bottom section with the buttons */
+        .modal-footer {
+            padding: 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 10px;
+        }
+    </style>
+
+    <!-- Load the JavaScript files that make the page interactive -->
+    <script src="confirmation.js"></script> <!-- Handles displaying permit details -->
+    <script src="session-timeout.js"></script> <!-- Handles the session timeout warning -->
+</body>
+</html>

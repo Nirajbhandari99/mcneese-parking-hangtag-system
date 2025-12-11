@@ -1,0 +1,250 @@
+<!-- Author: Niraj Bhandari -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy Parking Tag - McNeese Parking Services</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header navigation -->
+    <header class="header">
+        <div class="container">
+            <!-- Logo -->
+            <div class="logo">
+                <div class="logo-icon"><img src="download.png" alt="A description of the image" width="100" height="50"></div>
+                <div class="logo-text">
+                    <h1>McNeese Parking</h1>
+                    <p>Student Services</p>
+                </div>
+            </div>
+            <!-- Navigation links -->
+            <nav class="nav">
+                <a href="dashboard.html" class="nav-link ">Dashboard</a>
+                <a href="profile.html" class="nav-link ">Profile</a>
+                <a href="login.html" class="btn-logout">Logout</a>
+                
+            </nav>
+        </div>
+    </header>
+
+    <!-- Purchase form container -->
+    <div class="form-container" style="margin-top: 40px; margin-bottom: 60px; max-width: 750px;">
+        <h2 class="form-title">Buy Your Parking Tag</h2>
+        <p class="form-subtitle">Purchase your parking permit for the semester or academic year. Valid permits are required for all vehicles parked on campus.</p>
+        
+        <!-- Alert messages will show here -->
+        <div id="alertContainer"></div>
+        
+        <!-- Main purchase form -->
+        <form id="purchaseForm" onsubmit="handlePurchase(event)">
+            <!-- Personal info section -->
+            <div class="form-row">
+                <!-- Full name field -->
+                <div class="form-group">
+                    <label for="fullName" class="form-label">Full Name</label>
+                    <input 
+                        type="text" 
+                        id="fullName" 
+                        name="fullName" 
+                        class="form-input" 
+                        placeholder="Enter your full name"
+                        required
+                        aria-label="Full Name"
+                    >
+                </div>
+                
+                <!-- Student ID field -->
+                <div class="form-group">
+                    <label for="studentId" class="form-label"> ID</label>
+                    <input 
+                        type="text" 
+                        id="studentId" 
+                        name="studentId" 
+                        class="form-input" 
+                        placeholder="Enter your student ID"
+                        required
+                        aria-label="Student ID"
+                    >
+                </div>
+            </div>
+            
+            <!-- Vehicle details section -->
+            <div class="form-row">
+                <!-- Vehicle make and model combined -->
+                <div class="form-group">
+                    <label for="vehicleMake" class="form-label">Vehicle Make & Model</label>
+                    <input 
+                        type="text" 
+                        id="vehicleMake" 
+                        name="vehicleMake" 
+                        class="form-input" 
+                        placeholder="e.g., Honda Civic"
+                        required
+                        aria-label="Vehicle Make and Model"
+                    >
+                </div>
+                
+                <!-- License plate number -->
+                <div class="form-group">
+                    <label for="licensePlate" class="form-label">License Plate Number</label>
+                    <input 
+                        type="text" 
+                        id="licensePlate" 
+                        name="licensePlate" 
+                        class="form-input" 
+                        placeholder="Enter license plate"
+                        required
+                        aria-label="License Plate Number"
+                    >
+                </div>
+            </div>
+            
+            <!-- Parking tag type selection -->
+            <div class="form-group">
+                <label class="form-label">Choose Tag Type</label>
+                <div class="radio-group">
+                    <!-- Semester pass option -->
+                    <label class="radio-card">
+                        <input 
+                            type="radio" 
+                            name="tagType" 
+                            value="semester" 
+                            data-price="85.00"
+                            required
+                            onchange="updateTotal()"
+                            aria-label="Semester Pass"
+                        >
+                        <h3>Semester Pass</h3>
+                        <p>Valid for current semester only</p>
+                        <div class="price">$85.00</div>
+                    </label>
+                    
+                    <!-- Annual pass option - better deal -->
+                    <label class="radio-card">
+                        <input 
+                            type="radio" 
+                            name="tagType" 
+                            value="annual" 
+                            data-price="150.00"
+                            onchange="updateTotal()"
+                            aria-label="Annual Pass"
+                        >
+                        <h3>Annual Pass</h3>
+                        <p>Valid for entire academic year</p>
+                        <div class="price">$150.00</div>
+                        <div class="savings">Save $20</div>
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Payment section -->
+            <h3 style="margin: 30px 0 20px; color: var(--dark-gray);">Payment Information</h3>
+            
+            <!-- Credit card number -->
+            <div class="form-group">
+                <label for="cardNumber" class="form-label">Card Number</label>
+                <input 
+                    type="text" 
+                    id="cardNumber" 
+                    name="cardNumber" 
+                    class="form-input" 
+                    placeholder="1234 5678 9012 3456"
+                    required
+                    maxlength="19"
+                    aria-label="Credit Card Number"
+                >
+            </div>
+            
+            <!-- Expiry and CVV on same row -->
+            <div class="form-row">
+                <!-- Card expiration date -->
+                <div class="form-group">
+                    <label for="expiryDate" class="form-label">Expiry Date</label>
+                    <input 
+                        type="text" 
+                        id="expiryDate" 
+                        name="expiryDate" 
+                        class="form-input" 
+                        placeholder="MM/YY"
+                        required
+                        maxlength="5"
+                        aria-label="Card Expiry Date"
+                    >
+                </div>
+                
+                <!-- Security code on back of card -->
+                <div class="form-group">
+                    <label for="cvv" class="form-label">CVV</label>
+                    <input 
+                        type="text" 
+                        id="cvv" 
+                        name="cvv" 
+                        class="form-input" 
+                        placeholder="123"
+                        required
+                        maxlength="4"
+                        aria-label="Card CVV"
+                    >
+                </div>
+            </div>
+            
+            <!-- Name as it appears on card -->
+            <div class="form-group">
+                <label for="cardholderName" class="form-label">Cardholder Name</label>
+                <input 
+                    type="text" 
+                    id="cardholderName" 
+                    name="cardholderName" 
+                    class="form-input" 
+                    placeholder="Name on card"
+                    required
+                    aria-label="Cardholder Name"
+                >
+            </div>
+            
+            <!-- Total cost display - updated by JS when tag type is selected -->
+            <div class="total-section">
+                <span>Total Amount</span>
+                <span id="totalAmount">$0.00</span>
+            </div>
+            
+            <!-- Submit payment button -->
+            <button type="submit" class="btn-primary">💳 Submit Payment</button>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-section">
+                <h3>Contact Information</h3>
+                <p>📞 (337) 475-5000</p>
+                <p>✉️ parking@mcneese.edu</p>
+                <p>📍 4205 Ryan St, Lake Charles, LA 70609</p>
+            </div>
+            <div class="footer-section">
+                <h3>Office Hours</h3>
+                <p>Monday - Friday: 8:00 AM - 5:00 PM</p>
+                <p>Saturday: 9:00 AM - 1:00 PM</p>
+                <p>Sunday: Closed</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <p><a href="#" class="footer-link">Parking Regulations</a></p>
+                <p><a href="#" class="footer-link">Appeal Process</a></p>
+                <p><a href="#" class="footer-link">FAQ</a></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 McNeese State University. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript handles form submission and price calculations -->
+    <script src="purchase.js"></script>
+   
+     <script src="session-timeout.js"></script>
+</body>
+</html>

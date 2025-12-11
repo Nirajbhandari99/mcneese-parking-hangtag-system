@@ -1,0 +1,613 @@
+/* Reset default browser styles */
+/* Author: Biraj Tamang, Niraj Bhandari, Manish Khatri */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* CSS variables for consistent colors throughout the site */
+:root {
+    --primary-blue: #0066cc;
+    --dark-blue: #003d7a;
+    --light-blue: #4d94d9;
+    --dark-gray: #1a2332;
+    --medium-gray: #6c757d;
+    --light-gray: #f8f9fa;
+    --white: #ffffff;
+    --success: #28a745;
+    --danger: #dc3545;
+    --warning: #ffc107;
+}
+
+/* Base body styles */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* Container for centering content with max width */
+.container {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header section - sticky so it stays at top when scrolling */
+.header {
+    background-color: var(--white);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Logo styling */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Blue square icon for the logo */
+.logo-icon {
+    background-color: var(--primary-blue);
+    color: white;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-size: 24px;
+}
+
+/* University name and parking services text */
+.logo-text h1 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--dark-gray);
+}
+
+.logo-text p {
+    font-size: 14px;
+    color: var(--medium-gray);
+}
+
+/* Navigation menu */
+.nav {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+/* Navigation links */
+.nav-link {
+    text-decoration: none;
+    color: var(--dark-gray);
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+/* Highlight active page and on hover */
+.nav-link:hover,
+.nav-link.active {
+    color: var(--primary-blue);
+}
+
+/* Logout button styling */
+.btn-logout {
+    background-color: var(--dark-gray);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+.btn-logout:hover {
+    background-color: var(--dark-blue);
+}
+
+/* Hero section on homepage with gradient background */
+.hero {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+    background-image: url("McNeesePhoto.jpg");
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 80px 20px;
+    position: relative;
+    min-height: 500px;
+}
+
+/* Dark overlay on hero for better text readability */
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 61, 122, 0.4);
+}
+
+/* Hero content positioned above the overlay */
+.hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.hero-title {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.hero-subtitle {
+    font-size: 20px;
+    margin-bottom: 50px;
+    opacity: 0.95;
+}
+
+/* Three parking type cards in hero section */
+.parking-types {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    max-width: 900px;
+    margin: 0 auto 40px;
+}
+
+/* Individual parking card with glass effect */
+.parking-card {
+    background:  rgb(0, 81, 255);
+    
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 30px 20px;
+    transition: transform 0.3s, background 0.3s;
+}
+
+/* Lift card slightly on hover */
+.parking-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* Emoji icons in parking cards */
+.card-icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+.parking-card h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.parking-card p {
+    font-size: 16px;
+    opacity: 0.9;
+}
+
+/* Purchase Now button in hero */
+.btn-purchase {
+    background-color: white;
+    color: var(--primary-blue);
+    padding: 15px 40px;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+/* Grow button slightly on hover */
+.btn-purchase:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* How It Works section */
+.how-it-works {
+    padding: 80px 20px;
+    background-color: var(--white);
+}
+
+.section-title {
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 10px;
+    color: var(--dark-gray);
+}
+
+.section-subtitle {
+    text-align: center;
+    font-size: 18px;
+    color: var(--medium-gray);
+    margin-bottom: 60px;
+}
+
+/* Three step process grid */
+.steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 40px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.step {
+    text-align: center;
+}
+
+/* Circular numbered badges */
+.step-number {
+    width: 80px;
+    height: 80px;
+    background-color: var(--primary-blue);
+    color: white;
+    font-size: 36px;
+    font-weight: 700;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+}
+
+.step h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: var(--dark-gray);
+}
+
+.step p {
+    color: var(--medium-gray);
+    line-height: 1.6;
+}
+
+/* Footer section */
+.footer {
+    background-color: var(--dark-gray);
+    color: white;
+    padding: 50px 20px 20px;
+}
+
+/* Footer content in columns */
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    margin-bottom: 30px;
+}
+
+.footer-section h3 {
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.footer-section p {
+    margin-bottom: 10px;
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+/* Links in footer */
+.footer-link {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-link:hover {
+    color: var(--light-blue);
+}
+
+/* Copyright section at bottom */
+.footer-bottom {
+    text-align: center;
+    padding-top: 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+/* Form container with shadow */
+.form-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 40px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.form-title {
+    font-size: 32px;
+    text-align: center;
+    margin-bottom: 10px;
+    color: var(--dark-gray);
+}
+
+.form-subtitle {
+    text-align: center;
+    color: var(--medium-gray);
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* Two column form layout */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--dark-gray);
+}
+
+/* Text inputs and dropdowns */
+.form-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+/* Blue border when focused */
+.form-input:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+}
+
+/* Radio buttons for parking pass selection */
+.radio-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.radio-card {
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+/* Highlight card on hover */
+.radio-card:hover {
+    border-color: var(--primary-blue);
+    background-color: #f8f9ff;
+}
+
+.radio-card input[type="radio"] {
+    margin-bottom: 10px;
+}
+
+.radio-card h3 {
+    margin-bottom: 5px;
+}
+
+.radio-card p {
+    color: var(--medium-gray);
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+/* Price display in radio cards */
+.price {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--dark-gray);
+}
+
+/* Savings badge for annual pass */
+.savings {
+    color: var(--success);
+    font-size: 14px;
+}
+
+/* Primary submit buttons */
+.btn-primary {
+    width: 100%;
+    background-color: var(--dark-gray);
+    color: white;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: var(--dark-blue);
+}
+
+/* Total amount display section */
+.total-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: var(--light-gray);
+    border-radius: 8px;
+    margin: 20px 0;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* Dashboard page container */
+.dashboard {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+/* Dashboard cards grid layout */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+/* Individual dashboard card */
+.dashboard-card {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.dashboard-card h3 {
+    margin-bottom: 15px;
+    color: var(--dark-gray);
+}
+
+/* Status badges for permits */
+.status-badge {
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* Green badge for active permits */
+.status-active {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+/* Red badge for expired permits */
+.status-expired {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* Secondary buttons for actions */
+.btn-secondary {
+    background-color: var(--primary-blue);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.btn-secondary:hover {
+    background-color: var(--dark-blue);
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+    /* Stack header items vertically on mobile */
+    .header .container {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .nav {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    
+    /* Smaller text on mobile */
+    .hero-title {
+        font-size: 32px;
+    }
+    
+    .hero-subtitle {
+        font-size: 16px;
+    }
+    
+    /* Single column layouts on mobile */
+    .parking-types {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .radio-group {
+        grid-template-columns: 1fr;
+    }
+    
+    .steps {
+        grid-template-columns: 1fr;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Accessibility - visible focus indicators */
+*:focus {
+    outline: 2px solid var(--primary-blue);
+    outline-offset: 2px;
+}
+
+/* Disabled button state */
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Alert message styles */
+.alert {
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+/* Green success alerts */
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+/* Red error alerts */
+.alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Yellow warning alerts */
+.alert-warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeaa7;
+}
