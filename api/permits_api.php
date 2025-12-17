@@ -1,13 +1,4 @@
 <?php
-// This file handles all the permit-related actions like buying permits, viewing permits, and checking payment history
-// Save this file at: C:\xampp\htdocs\mcneese-parking\api\permits_api.php
-
-// Load the database connection settings
-//Author: Manis Khatri
- // date: 12/09/2025
-//require_once 'config.php';
-
-// Try to connect to the database
 $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
 // If the connection fails, stop everything and show an error
@@ -16,7 +7,7 @@ if ($conn->connect_error) {
     die(json_encode(['error' => 'Database connection failed']));
 }
 
-// Make sure we can handle special characters properly
+
 $conn->set_charset("utf8mb4");
 
 // Figure out what the user wants to do (create permit, view permits, etc.)

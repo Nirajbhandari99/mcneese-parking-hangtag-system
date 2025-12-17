@@ -1,10 +1,6 @@
 <?php
-// This file handles all vehicle-related actions like adding, viewing, and removing vehicles
-// IMPORTANT: Don't put any spaces, HTML, or echo statements before this line or the API won't work
-// author:Niraj Bhandari
 require_once 'config.php';
 
-// Figuring  out what the user wants to do (add vehicle, view vehicles, or remove vehicle, edit vehicle)
 $action = $_POST['action'] ?? $_GET['action'] ?? '';
 
 // Making sure the user is logged in before letting them do anything
@@ -12,10 +8,10 @@ if (!isset($_SESSION['user_id']) || empty($_SESSION['user_id'])) {
     apiResponse(false, 'Not authenticated');
 }
 
-// Getting the user's ID and make sure it's a number
+
 $userId = intval($_SESSION['user_id']);
 
-// Based on what action the user wants, runnig the right function
+
 switch($action) {
     case 'addVehicle':// adding vehicle
         addVehicle($conn, $userId);
@@ -30,7 +26,6 @@ switch($action) {
         apiResponse(false, 'Invalid action');
 }
 
-// This function adds a new vehicle to the user's account, so they can add multiple vehicle to dashboard
 function addVehicle($conn, $userId) {
     // Getting all the vehicle information from the form and cleaning it up
     $make = trim($_POST['make'] ?? '');

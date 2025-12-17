@@ -1,42 +1,25 @@
 <?php
 /**
- * AUTH_API.PHP - Authentication System for McNeese Parking
- * 
- * This file handles all user authentication operations including:
- * - User Registration (creating new accounts)
- * - User Login (verifying credentials and starting sessions)
- * - User Logout (ending sessions)
- * - Profile Updates (changing user information)
- * - Session Checking (verifying if user is logged in)
- * - Password Changes (updating user passwords)
- * All responses are sent as JSON format for easy JavaScript handling
- * 
  * Author: Niraj Bhandari
  * date: 12/09/2025
  */
-// Include the configuration file which has database connection and helper functions
 require_once 'config.php';
 
-// ROUTING SECTION - Determine which action the user wants to perform
-
-// Get the 'action' parameter from either POST or GET request
-// Example: auth_api.php?action=login or sent via POST data
 $action = $_POST['action'] ?? $_GET['action'] ?? '';
 
-// Using a switch statement to route to the correct function based on action
 switch($action) {
     case 'register':
-        // Handle new user registration
+
         handleRegister();
         break;
         
     case 'login':
-        // Handle user login (check credentials)
+
         handleLogin();
         break;
         
     case 'logout':
-        // Handle user logout (destroy session)
+
         handleLogout();
         break;
         
@@ -59,9 +42,6 @@ switch($action) {
         // If action doesn't match any case, return error
         apiResponse(false, 'Invalid action');
 }
-
-// FUNCTION: checkSession()
-// PURPOSE: Verify if user is logged in and return their information
 function checkSession() {
     global $conn; // Access the database connection from config.php
     
