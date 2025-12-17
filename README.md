@@ -72,19 +72,19 @@ mysql -u username -p database_name < Table.txt
 ## Project Structure
 ```
 mcneese-parking/
-├── index.php                    # Homepage
-├── login.html                   # Login page
-├── register.html                # Registration
-├── dashboard.html               # User dashboard
-├── purchase.html                # Permit purchase
-├── confirmation.html            # Purchase confirmation
-├── profile.html                 # User profile
-├── styles.css                   # Global styles
-├── *.js                         # Frontend logic
+├── index.php                   
+├── login.html                   
+├── register.html                
+├── dashboard.html             
+├── purchase.html                
+├── confirmation.html            
+├── profile.html                 
+├── styles.css                   
+├── *.js                         
 ├── api/
-│   ├── config.php              # Database config
-│   ├── auth_api.php            # Authentication
-│   ├── permits_api.php         # Permits management
-│   └── vehicles_api.php        # Vehicle management
-└── Table.txt                   # Database schema
+│   ├── config.php              
+│   ├── auth_api.php            
+│   ├── permits_api.php         
+│   └── vehicles_api.php        
+└── Table.txt                   
 Note: Valid @mcneese.edu email required for registration.
